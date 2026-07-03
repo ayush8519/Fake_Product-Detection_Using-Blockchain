@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="section-title mb-4">👥 Registered Users on Blockchain</h2>
+{% if users %}
+<div class="table-responsive">
+  <table class="table table-bordered table-hover bg-white rounded">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Contact</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for u in users %}
+      <tr>
+        <td>{{ u.id }}</td>
+        <td>{{ u.username }}</td>
+        <td>{{ u.email }}</td>
+        <td>{{ u.contact }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  <div class="alert alert-info">No users registered yet.</div>
+{% endif %}
+<a href="/admin_home" class="btn btn-secondary mt-3">← Back</a>
+{% endblock %}

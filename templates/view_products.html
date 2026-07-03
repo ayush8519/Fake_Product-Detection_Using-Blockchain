@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="section-title mb-4">📋 All Products on Blockchain</h2>
+{% if products %}
+<div class="table-responsive">
+  <table class="table table-bordered table-hover bg-white rounded">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Blockchain Signature</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in products %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.productName }}</td>
+        <td>{{ p.productDesc }}</td>
+        <td>{{ p.productPrice }}</td>
+        <td><code style="font-size:0.7rem;word-break:break-all;">{{ p.barcodeSignature }}</code></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+  <div class="alert alert-info">No products found on Blockchain.</div>
+{% endif %}
+<a href="/admin_home" class="btn btn-secondary mt-3">← Back</a>
+{% endblock %}

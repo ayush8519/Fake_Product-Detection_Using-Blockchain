@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="section-title mb-4">📷 Authenticate Barcode Scan</h2>
+<div class="row">
+  <div class="col-md-5">
+    <div class="card">
+      <div class="card-header">Upload Barcode Image</div>
+      <div class="card-body p-4">
+        <form method="POST" enctype="multipart/form-data">
+          <div class="mb-3">
+            <label class="form-label">Product ID</label>
+            <input type="number" name="productId" class="form-control"
+                   min="1" placeholder="e.g. 1" required/>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Barcode Image</label>
+            <input type="file" name="barcodeImage" class="form-control"
+                   accept="image/*" required/>
+          </div>
+          <button type="submit" class="btn btn-success w-100">
+            Authenticate with Blockchain
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  {% if result %}
+  <div class="col-md-7 mt-3 mt-md-0">
+    {% if result == "AUTHENTIC" %}
+    <div class="card border-success">
+      <div class="card-header bg-success text-white fs-5">✅ BARCODE AUTHENTICATED</div>
+      <div class="card-body">
+        <p class="text-success fw-bold">Product is GENUINE. Details retrieved from Blockchain:</p>
+        <table class="table table-sm">
+          <tr><th>Product ID</th><td>{{ product.id }}</td></tr>
+          <tr><th>Name</th><td>{{ product.productName }}</td></tr>
+          <tr><th>Description</th><td>{{ product.productDesc }}</td></tr>
+          <tr><th>Price</th><td>{{ product.productPrice }}</td></tr>
+        </table>
+        <p class="text-muted small">Matched Signature:<br/>
+           <code style="word-break:break-all;font-size:0.7rem;">{{ signature }}</code>
+        </p>
+      </div>
+    </div>
+    {% else %}
+    <div class="card border-danger">
+      <div class="card-header bg-danger text-white fs-5">❌ AUTHENTICATION FAILED</div>
+      <div class="card-body">
+        <p class="text-primary fw-bold fs-5">⚠️ FAKE BARCODE DETECTED!</p>
+        <p class="text-muted">The uploaded barcode's digital signature does NOT match
+           any registered product on the Blockchain. This product may be counterfeit.</p>
+        <p class="text-muted small">Generated Signature:<br/>
+           <code style="word-break:break-all;font-size:0.7rem;">{{ signature }}</code>
+        </p>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+<a href="/user_home" class="btn btn-secondary mt-4">← Back</a>
+{% endblock %}
